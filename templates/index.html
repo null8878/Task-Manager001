@@ -1,17 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Task Tracker</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
 </head>
 <body>
-    <h1>My Task List</h1>
-    <form method="POST" action="/add">
-        <input type="text" name="task" placeholder="New task" required>
-        <button type="submit">Add</button>
+    <h1>My Tasks 📝</h1>
+
+    <form action="{{ url_for('add') }}" method="post">
+        <input type="text" name="task" placeholder="Enter a new task">
+        <button type="submit">Add Task</button>
     </form>
+
+    <h2>Current Tasks:</h2>
     <ul>
-        {% for task in tasks %}
-            <li>{{ task }}</li>
+        {% for index, task_content in tasks %}
+            <li>
+                {{ task_content }}
+                <form action="{{ url_for('delete', task_id=index) }}" method="post" style="display: inline;">
+                    <button type="submit">Delete 🗑️</button>
+                </form>
+            </li>
+        {% else %}
+            <li>No tasks yet!</li>
         {% endfor %}
     </ul>
 </body>
